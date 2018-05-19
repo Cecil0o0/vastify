@@ -1,0 +1,36 @@
+{
+  "name": "vast",
+  "version": "1.0.0",
+  "description": "nodejs微服务框架",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cecil0o0/vast.git"
+  },
+  "keywords": [
+    "nodejs",
+    "winston",
+    "seneca",
+    "koa",
+    "rabbitmq",
+    "mongodb",
+    "reddis"
+  ],
+  "author": "Cecil",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Cecil0o0/vast/issues"
+  },
+  "homepage": "https://github.com/Cecil0o0/vast#readme",
+  "dependencies": {
+    "koa": "^2.5.1",
+    "koa-router": "^7.4.0",
+    "seneca": "^3.5.0",
+    "seneca-web": "^2.2.0",
+    "seneca-web-adapter-koa2": "^1.1.0",
+    "winston": "^3.0.0-rc5"
+  }
+}
