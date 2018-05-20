@@ -38,7 +38,7 @@ module.exports = {
   // db相关 -----end
   // pm2相关 -----start
   pm2: {
-    deploy: {
+    app: {
       max_memory_restart: '150M',
       env: {
         NODE_ENV: 'development'
@@ -60,7 +60,17 @@ module.exports = {
       force: false,
       // 在Keymetrics dashboard中执行pull/upgrade操作后执行的命令队列
       post_update: ['npm install']
+    },
+    deploy: {}
+  },
+  // pm2相关 -----end
+  logger: {
+    winston: {
+      level: 'info',
+      label: 'microservices',
+      format: info => {
+        return `${info.timestamp} [${info.label}] ${info.level}: ${info.message}`
+      }
     }
   }
-  // pm2相关 -----end
 }

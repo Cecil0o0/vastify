@@ -7,15 +7,14 @@
 
 const { createLogger, format, transports } = require('winston')
 const { combine, timestamp, label, printf } = format
+const w = require('../config').logger.winston
 
 const logger = createLogger({
-  level: 'info',
+  level: w.level,
   format: combine(
-    label({label: 'microservices'}),
+    label({label: w.level}),
     timestamp(),
-    printf(info => {
-      return `${info.timestamp} [${info.label}] ${info.level}: ${info.message}`
-    })
+    printf(w.format)
   ),
   transports: [ new transports.Console() ]
 })

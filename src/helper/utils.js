@@ -3,6 +3,8 @@
  * @param {Object} o1
  * @param {Object} o2
  */
+'use strict'
+
 function ObjectDeepSet(o1 = {}, o2 = {}) {
   for (let key in o1) {
     if (o1.hasOwnProperty(key) && o2.hasOwnProperty(key)) {
