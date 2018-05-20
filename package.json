@@ -1,7 +1,7 @@
 {
-  "name": "vast",
+  "name": "vastify",
   "version": "1.0.0",
-  "description": "nodejs微服务框架",
+  "description": "轻量级nodejs微服务框架",
   "main": "src/index.js",
   "scripts": {
     "test": "node src/index.js"
