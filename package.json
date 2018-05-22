@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Cecil0o0/vast.git"
+    "url": "git+https://github.com/Cecil0o0/vastify.git"
   },
   "keywords": [
     "nodejs",
@@ -22,9 +22,9 @@
   "author": "Cecil",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Cecil0o0/vast/issues"
+    "url": "https://github.com/Cecil0o0/vastify/issues"
   },
-  "homepage": "https://github.com/Cecil0o0/vast#readme",
+  "homepage": "https://github.com/Cecil0o0/vastify#readme",
   "dependencies": {
     "koa": "^2.5.1",
     "koa-router": "^7.4.0",
