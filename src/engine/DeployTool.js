@@ -22,8 +22,17 @@ function GeneratePM2AppConfig({ name = '', script = '', error_file = '', out_fil
   }
 }
 
-module.exports = class Deploy {
+function GeneratePM2DeployConfig({ ref = '', repo = '', path = '' } = {}) {
+  return Object.assign({
+    ref,
+    repo,
+    path
+  }, config.pm2.deploy)
+}
+
+module.exports = class DeployTool {
   constructor() {
     this.GeneratePM2AppConfig = GeneratePM2AppConfig
+    this.GeneratePM2DeployConfig = GeneratePM2DeployConfig
   }
 }

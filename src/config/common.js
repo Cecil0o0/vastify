@@ -1,15 +1,17 @@
+const isProduction = process.env.NODE_ENV === 'production'
+
 module.exports = {
   // seneca微服务相关 -----start
   seneca: {
     // seneca启动超时时间
-    timeout: 10000,
+    timeout: 5000,
     // 日志
     log: {
-      level: false,
-      short: false
+      level: 'info',
+      short: !isProduction
     },
     // 微服务唯一标识
-    tag: `account-server&&1001`,
+    tag: 'micro1000',
     // 追踪
     trace: {
       act: true,
@@ -17,7 +19,7 @@ module.exports = {
     },
     debug: {
       // 当设置为true时，如软件运行中throw new Error()软件不会挂掉
-      undead: false
+      undead: !isProduction
     }
   },
   // seneca微服务相关 -----end
@@ -28,7 +30,7 @@ module.exports = {
   // rabbitmq队列相关 -----end
   // cache相关 -----start
   cache: {
-    type: 'nuster'
+    type: 'reddis'
   },
   // cache相关 -----end
   // db相关 -----start
@@ -39,6 +41,7 @@ module.exports = {
   // pm2相关 -----start
   pm2: {
     app: {
+      args: '',
       max_memory_restart: '150M',
       env: {
         NODE_ENV: 'development'
@@ -50,7 +53,7 @@ module.exports = {
       source_map_support: true,
       // 不合并日志输出，用于集群服务
       merge_logs: false,
-      // 常用于启动应用时异常
+      // 常用于启动应用时异常，超时时间限制
       listen_timeout: 5000,
       // 进程SIGINT命令时间限制，即进程必须在监听到SIGINT信号后必须在以下设置时间结束进程
       kill_timeout: 2000,
@@ -59,9 +62,22 @@ module.exports = {
       // 不允许以相同脚本启动进程
       force: false,
       // 在Keymetrics dashboard中执行pull/upgrade操作后执行的命令队列
-      post_update: ['npm install']
+      post_update: ['npm install'],
+      // 监听文件变化
+      watch: false,
+      // 忽略监听文件变化
+      ignore_watch: ['node_modules']
     },
-    deploy: {}
+    deploy: {
+      production: {
+        'user': 'root',
+        'host': 'qingf.me',
+        'ref': 'remotes/origin/master',
+        'repo': 'https://github.com/Cecil0o0/account-server.git',
+        'path': '/apps/repository',
+        'post-deploy': 'pm2 startOrRestart deploy/deploy.config.js --env production'
+      }
+    }
   },
   // pm2相关 -----end
   logger: {
