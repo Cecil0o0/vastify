@@ -25,11 +25,11 @@ class Vast {
     this.seneca = new Seneca(config.seneca)
     this.useREST = generateUseREST(this.seneca)
     this.web = web
-    this.logger = logger
   }
 }
 
 module.exports = {
   Vast,
-  deployTool: new DeployTool()
+  deployTool: new DeployTool(),
+  logger
 }

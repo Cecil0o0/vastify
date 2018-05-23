@@ -43,9 +43,15 @@ module.exports = {
     app: {
       args: '',
       max_memory_restart: '150M',
+      // 默认环境配置
       env: {
         NODE_ENV: 'development'
       },
+      // 测试环境配置
+      env_test: {
+        NODE_ENV: 'test'
+      },
+      // 生产环境配置
       env_production: {
         NODE_ENV: 'production'
       },
@@ -69,13 +75,22 @@ module.exports = {
       ignore_watch: ['node_modules']
     },
     deploy: {
-      production: {
-        'user': 'root',
-        'host': 'qingf.me',
-        'ref': 'remotes/origin/master',
-        'repo': 'https://github.com/Cecil0o0/account-server.git',
-        'path': '/apps/repository',
-        'post-deploy': 'npm install && pm2 startOrRestart deploy/deploy.config.js --env production'
+      'user': 'deploy',
+      'host': 'qingf.me',
+      'ref': 'remotes/origin/master',
+      'repo': 'https://github.com/Cecil0o0/account-server.git',
+      'path': '/home/deploy/apps/account-server',
+      // 生命周期钩子，在ssh到远端之后setup操作之前执行
+      'pre-setup': '',
+      // 生命周期钩子，在初始化设置即git pull之后执行
+      'post-setup': 'ls -la',
+      // 生命周期钩子，在远端git fetch origin之前执行
+      'pre-setup': '',
+      // 生命周期钩子，在远端git修改HEAD指针到指定ref之后执行
+      'post-deploy': 'npm install && pm2 startOrRestart deploy/ecosystem.config.js --env production',
+      // 以下这个环境变量将注入到所有app中
+      "env": {
+        "NODE_ENV": "production"
       }
     }
   },

@@ -23,8 +23,20 @@ function GeneratePM2AppConfig({ name = '', script = '', error_file = '', out_fil
   }
 }
 
-function GeneratePM2DeployConfig(deployConfig = {}) {
-  return Object.assign(config.pm2.deploy, deployConfig)
+function GeneratePM2DeployConfig({ name = '', user = 'deploy', host = '', ref = 'remotes/origin/master', repo = '', path = '', env = {} } = {}) {
+  if (user && host && repo && path) {
+    return Object.assign(config.pm2.deploy, {
+      user,
+      host,
+      ref,
+      repo,
+      path,
+      env
+    })
+  } else {
+    throw new Error('创建pm2 deploy config时必须传入user,host,repo,path')
+    return null
+  }
 }
 
 module.exports = class DeployTool {

@@ -1,3 +1,3 @@
-const Vast = require('./engine')
+const Engine = require('./engine')
 
-module.exports = Vast
+module.exports = Engine
