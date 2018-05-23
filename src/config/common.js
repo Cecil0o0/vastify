@@ -75,7 +75,7 @@ module.exports = {
         'ref': 'remotes/origin/master',
         'repo': 'https://github.com/Cecil0o0/account-server.git',
         'path': '/apps/repository',
-        'post-deploy': 'pm2 startOrRestart deploy/deploy.config.js --env production'
+        'post-deploy': 'npm install && pm2 startOrRestart deploy/deploy.config.js --env production'
       }
     }
   },

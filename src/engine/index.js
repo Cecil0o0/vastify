@@ -26,8 +26,10 @@ class Vast {
     this.useREST = generateUseREST(this.seneca)
     this.web = web
     this.logger = logger
-    this.deployTool = new DeployTool()
   }
 }
 
-module.exports = Vast
+module.exports = {
+  Vast,
+  deployTool: new DeployTool()
+}
