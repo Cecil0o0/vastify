@@ -29,14 +29,14 @@ function getIntance (externalConfig = {}) {
     // pm2自动化部署相关工具
     instance.DeployTool = new DeployTool()
     // 日志组件
-    instance.Logger = new Logger(instance.config.logger)
+    instance.logger = Logger.getInstance(instance.config.logger.winston)
     // 持久化存储组件
     instance.DB = new DB(instance.config.db)
   }
   return instance
 }
 
-console.log(getIntance())
+getIntance()
 
 module.exports = {
   getIntance

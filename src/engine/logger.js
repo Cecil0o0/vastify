@@ -7,17 +7,7 @@
 
 const { createLogger, format, transports } = require('winston')
 const { combine, timestamp, label, printf } = format
-const w = require('../config').logger.winston
-
-const logger = createLogger({
-  level: w.level,
-  format: combine(
-    label({label: w.level}),
-    timestamp(),
-    printf(w.format)
-  ),
-  transports: [ new transports.Console() ]
-})
+const defaultWinstonConfig = require('../config').logger.winston
 
 // highest to lowest
 const levels = {
@@ -29,8 +19,23 @@ const levels = {
   silly: 5
 }
 
-module.exports = class Logger {
-  constructor () {
-    this.logger = logger
+let instance = null
+
+function getInstance(winstonConfig = {}) {
+  if (!instance) {
+    instance = createLogger({
+      level: winstonConfig.level || defaultWinstonConfig.level,
+      format: combine(
+        label({label: winstonConfig.label || defaultWinstonConfig.label}),
+        timestamp(),
+        printf(winstonConfig.format || defaultWinstonConfig.format)
+      ),
+      transports: [ new transports.Console() ]
+    })
   }
+  return instance
+}
+
+module.exports = {
+  getInstance
 }

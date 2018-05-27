@@ -9,7 +9,7 @@ const Koa = require('koa')
 const Router = require('koa-router')
 const SenecaWebAdapterKoa = require('seneca-web-adapter-koa2')
 const SenecaWeb = require('seneca-web')
-const Logger = require('./Logger')
+const logger = require('./Logger').getInstance()
 const app = new Koa()
 
 class VastifyWebModule {
@@ -47,13 +47,13 @@ const externalUseREST = seneca => {
         if (isNormativeModule(m)) {
           use(m)
         } else {
-          Logger.logger.warning(warningmsg)
+          logger.warn(warningmsg)
         }
       })
     } else if (typeof webServiceModules === 'object' && webServiceModules instanceof VastifyWebModule) {
       use(m)
     } else {
-      Logger.logger.warning(warningmsg)
+      logger.warn(warningmsg)
     }
   }.bind(seneca)
 
