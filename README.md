@@ -13,5 +13,15 @@ a lightweight nodejs microservices framework
 - PM2：node服务部署（服务集群）、管理与监控
 - PM2：自动化部署
 - PM2集成docker
+- 请求追踪（重建用户请求流程）
+- Consul 服务注册与发现
+- mongodb持久化存储
+- 支持流处理（文件上传/下载等）
+- 基于seneca的路由服务中间件
+- jenkins自动化部署
+- nginx负载均衡
+- 持续集成方案
+- redis缓存
+- prisma提供GraphQL接口
 
 [Introduction](https://blog.qingf.me/?p=734)
