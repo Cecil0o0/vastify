@@ -6,30 +6,31 @@
 
 let config = require('../config')
 const Seneca = require('seneca')
-const web = require('./web')
+const Web = require('./Web')
 const DeployTool = require('./DeployTool')
-const generateUseREST = require('./useREST')
-const logger = require('./logger')
+const Logger = require('./Logger')
 const { ObjectDeepSet } = require('../helper/utils')
+const DB = require('./DB')
 
-let vast = null
-
-class Vast {
+class Vastify {
   constructor (externalConfig = {}) {
     this.config = config
     ObjectDeepSet(this.config, externalConfig)
-    this.init(this.config)
-  }
-
-  init (config) {
-    this.seneca = new Seneca(config.seneca)
-    this.useREST = generateUseREST(this.seneca)
-    this.web = web
+    // 微服务核心组件
+    this.seneca = new Seneca(this.config.seneca)
+    // 微服务对外提供http服务组件
+    this.web = new Web()
+    // 提供http服务扩展
+    this.web.externalUseREST(this.seneca)
+    // pm2自动化部署相关工具
+    this.DeployTool = new DeployTool()
+    // 日志组件
+    this.Logger = new Logger(this.config.logger)
+    // 持久化存储组件
+    this.DB = new DB(this.config.db)
   }
 }
 
-module.exports = {
-  Vast,
-  deployTool: new DeployTool(),
-  logger
-}
+module.exports = Vastify
+
+console.log(Object.assign(new Vastify()))

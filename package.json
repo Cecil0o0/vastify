@@ -1,6 +1,6 @@
 {
   "name": "vastify",
-  "version": "1.0.10",
+  "version": "1.1.0",
   "description": "轻量级nodejs微服务框架",
   "main": "src/index.js",
   "scripts": {
@@ -26,8 +26,10 @@
   },
   "homepage": "https://github.com/Cecil0o0/vastify#readme",
   "dependencies": {
+    "install": "^0.11.0",
     "koa": "^2.5.1",
     "koa-router": "^7.4.0",
+    "mongoose": "^5.1.2",
     "seneca": "^3.5.0",
     "seneca-web": "^2.2.0",
     "seneca-web-adapter-koa2": "^1.1.0",

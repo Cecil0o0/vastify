@@ -29,4 +29,8 @@ const levels = {
   silly: 5
 }
 
-module.exports = logger
+module.exports = class Logger {
+  constructor () {
+    this.logger = logger
+  }
+}
