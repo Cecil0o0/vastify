@@ -1,7 +1,7 @@
 /*
  * @Author: Cecil
  * @Last Modified by: Cecil
- * @Last Modified time: 2018-05-27 16:33:56
+ * @Last Modified time: 2018-05-27 17:07:09
  * @Description mongodb实例
  */
 
@@ -21,7 +21,7 @@ function initDB (DBConfig = {}) {
     console.log('mongoose connection connected')
   })
   db.on('disconnected', () => {
-    console.log('mongoose connection disconnect')
+    throw new Error('mongodb未连接')
     process.exit(1)
   })
 

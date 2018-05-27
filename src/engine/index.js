@@ -12,25 +12,32 @@ const Logger = require('./Logger')
 const { ObjectDeepSet } = require('../helper/utils')
 const DB = require('./DB')
 
-class Vastify {
-  constructor (externalConfig = {}) {
-    this.config = config
-    ObjectDeepSet(this.config, externalConfig)
+let instance = null
+
+function getIntance (externalConfig = {}) {
+  if (!instance) {
+    instance = {
+      config
+    }
+    ObjectDeepSet(instance.config, externalConfig)
     // 微服务核心组件
-    this.seneca = new Seneca(this.config.seneca)
+    instance.seneca = new Seneca(instance.config.seneca)
     // 微服务对外提供http服务组件
-    this.web = new Web()
+    instance.web = new Web()
     // 提供http服务扩展
-    this.web.externalUseREST(this.seneca)
+    instance.web.externalUseREST(instance.seneca)
     // pm2自动化部署相关工具
-    this.DeployTool = new DeployTool()
+    instance.DeployTool = new DeployTool()
     // 日志组件
-    this.Logger = new Logger(this.config.logger)
+    instance.Logger = new Logger(instance.config.logger)
     // 持久化存储组件
-    this.DB = new DB(this.config.db)
+    instance.DB = new DB(instance.config.db)
   }
+  return instance
 }
 
-module.exports = Vastify
+console.log(getIntance())
 
-console.log(Object.assign(new Vastify()))
+module.exports = {
+  getIntance
+}
