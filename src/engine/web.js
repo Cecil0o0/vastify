@@ -39,6 +39,8 @@ const use = function (m) {
   })
 }
 
+const warnMsg = '检测到传入的模块为非标准模块，已自动忽略'
+
 // 该方法用于koa注册路由，seneca注册模式，然后建立路由与模式之间一对一关系
 const externalUseREST = seneca => {
   let useREST = function (webServiceModules) {
@@ -47,13 +49,13 @@ const externalUseREST = seneca => {
         if (isNormativeModule(m)) {
           use(m)
         } else {
-          logger.warn(warningmsg)
+          logger.warn(warnMsg)
         }
       })
     } else if (typeof webServiceModules === 'object' && webServiceModules instanceof VastifyWebModule) {
-      use(m)
+      use(webServiceModules)
     } else {
-      logger.warn(warningmsg)
+      logger.warn(warnMsg)
     }
   }.bind(seneca)
 
