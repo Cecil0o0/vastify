@@ -35,7 +35,8 @@ module.exports = {
   // cache相关 -----end
   // db相关 -----start
   db: {
-    type: 'mongodb'
+    type: 'mongodb',
+    address: 'mongodb://localhost:27017'
   },
   // db相关 -----end
   // pm2相关 -----start

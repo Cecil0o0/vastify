@@ -27,12 +27,12 @@ const isNormativeModule = m => {
   return m instanceof VastifyWebModule
 }
 
-const use = function (m) {
+const use = function (m, { context }) {
   // 初始化模块
-  this.use(m.plugin)
+  context.use(m.plugin)
 
   // 初始化seneca-web插件，并适配koa
-  this.use(SenecaWeb, {
+  context.use(SenecaWeb, {
     context: Router(),
     adapter: SenecaWebAdapterKoa,
     routes: [...m.routes]
@@ -43,17 +43,21 @@ const warnMsg = '检测到传入的模块为非标准模块，已自动忽略'
 
 // 该方法用于koa注册路由，seneca注册模式，然后建立路由与模式之间一对一关系
 const externalUseREST = seneca => {
-  let useREST = function (webServiceModules) {
+  let useREST = function(webServiceModules) {
     if (webServiceModules instanceof Array) {
-      webServiceModules.forEach(m => {
+      webServiceModules.forEach(function(m) {
         if (isNormativeModule(m)) {
-          use(m)
+          use(m, {
+            context: seneca
+          })
         } else {
           logger.warn(warnMsg)
         }
       })
     } else if (typeof webServiceModules === 'object' && webServiceModules instanceof VastifyWebModule) {
-      use(webServiceModules)
+      use(webServiceModules, {
+        context: seneca
+      })
     } else {
       logger.warn(warnMsg)
     }

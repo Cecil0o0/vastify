@@ -31,7 +31,7 @@ function getIntance (externalConfig = {}) {
     // 日志组件
     instance.logger = Logger.getInstance(instance.config.logger.winston)
     // 持久化存储组件
-    instance.DB = new DB(instance.config.db)
+    instance.db = new DB(instance.config.db)
   }
   return instance
 }
