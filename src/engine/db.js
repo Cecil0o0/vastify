@@ -1,7 +1,7 @@
 /*
  * @Author: Cecil
  * @Last Modified by: Cecil
- * @Last Modified time: 2018-05-27 20:04:46
+ * @Last Modified time: 2018-05-30 14:38:09
  * @Description mongodb实例
  */
 
@@ -24,8 +24,12 @@ function getInstance(DBConfig = {}) {
       console.log('mongoose connection connected')
     })
     instance.on('disconnected', () => {
-      throw new Error('mongodb未连接')
-      process.exit(1)
+      if (DBConfig.FatalIfNotConnected) {
+        throw new Error('mongodb未连接')
+        process.exit(1)
+      } else {
+        console.log('mongodb未连接')
+      }
     })
   }
   return instance

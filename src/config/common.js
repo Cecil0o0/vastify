@@ -36,7 +36,8 @@ module.exports = {
   // db相关 -----start
   db: {
     type: 'mongodb',
-    address: 'mongodb://localhost:27017'
+    address: 'mongodb://localhost:27017',
+    FatalIfNotConnected: false
   },
   // db相关 -----end
   // pm2相关 -----start
