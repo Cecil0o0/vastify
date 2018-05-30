@@ -1,6 +1,8 @@
-/**
- * @author Cecil
- * @description 该模块用于初始化web server实例，此处用koa。
+/*
+ * @Author: Cecil
+ * @Last Modified by: Cecil
+ * @Last Modified time: 2018-05-31 01:56:43
+ * @Description 该模块用于初始化web server实例 框架采用koa
  */
 
 'use strict'
@@ -9,7 +11,7 @@ const Koa = require('koa')
 const Router = require('koa-router')
 const SenecaWebAdapterKoa = require('seneca-web-adapter-koa2')
 const SenecaWeb = require('seneca-web')
-const logger = require('./Logger').getInstance()
+const logger = new (require('../tools/logger'))().generateLogger()
 const app = new Koa()
 
 class VastifyWebModule {

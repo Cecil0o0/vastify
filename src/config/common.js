@@ -1,7 +1,15 @@
+/*
+ * @Author: Cecil
+ * @Last Modified by: Cecil
+ * @Last Modified time: 2018-05-31 01:58:34
+ * @Description 框架默认配置文件
+ */
+
+'use strict'
+
 const isProduction = process.env.NODE_ENV === 'production'
 
 module.exports = {
-  // seneca微服务相关 -----start
   seneca: {
     // seneca启动超时时间
     timeout: 5000,
@@ -22,25 +30,24 @@ module.exports = {
       undead: !isProduction
     }
   },
-  // seneca微服务相关 -----end
-  // rabbitmq队列相关 -----start
+
   ampq: {
-    addr: 'amqp://localhost'
+    type: 'rabbitmq',
+    address: 'amqp://localhost'
   },
-  // rabbitmq队列相关 -----end
-  // cache相关 -----start
+
   cache: {
-    type: 'reddis'
+    type: 'reddis',
+    address: ''
   },
-  // cache相关 -----end
-  // db相关 -----start
+
   db: {
     type: 'mongodb',
+    version: 'v3.4.9',
     address: 'mongodb://localhost:27017',
-    FatalIfNotConnected: false
+    FatalIfNotConnected: true
   },
-  // db相关 -----end
-  // pm2相关 -----start
+
   pm2: {
     app: {
       args: '',
@@ -96,13 +103,54 @@ module.exports = {
       }
     }
   },
-  // pm2相关 -----end
+
   logger: {
     winston: {
       level: 'info',
       label: 'microservices',
       format: info => {
         return `${info.timestamp} [${info.label}] ${info.level}: ${info.message}`
+      }
+    }
+  },
+  // 服务注册与发现
+  // https://github.com/silas/node-consul#catalog-node-services
+  'serverR&D': {
+    consulServer: {
+      type: 'consul',
+      host: '127.0.0.1',
+      port: 8500,
+      secure: false,
+      ca: [],
+      defaults: {
+        token: ''
+      },
+      promisify: true
+    },
+    bizService: {
+      name: 'defaultName',
+      id: 'defaultId',
+      address: '127.0.0.1',
+      port: 1000,
+      tags: [],
+      meta: {
+        version: '',
+        description: '注册集群'
+      },
+      check: {
+        // 用于consul client主动请求consul server，如果设定时间内未更新check则失效(ex: 60s)，这里由于我们的业务服务统一用pm2做集群处理，所以考虑到集群主动请求的效率较低，这里还是采用http形式
+        // ttl: '15s',
+        http: '',
+        // check间隔时间(ex: 15s)
+        interval: '5s',
+        // check超时时间(ex: 10s)
+        timeout: '2s',
+        // 处于临界状态后自动注销服务的超时时间
+        deregistercriticalserviceafter: '30s',
+        // 初始化状态值为成功
+        status: 'passing',
+        // 备注
+        notes: 'check集群是否alive'
       }
     }
   }

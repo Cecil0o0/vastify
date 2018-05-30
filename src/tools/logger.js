@@ -1,6 +1,8 @@
-/**
- * @author Cecil
- * @description 该模块输出日志实例，比如winston，bunyan或log4js
+/*
+ * @Author: Cecil
+ * @Last Modified by: Cecil
+ * @Last Modified time: 2018-05-31 01:55:47
+ * @Description 该模块输出日志实例生成器，比如winston
  */
 
 'use strict'
@@ -21,7 +23,7 @@ const levels = {
 
 let instance = null
 
-function getInstance(winstonConfig = {}) {
+function generateLogger(winstonConfig = {}) {
   if (!instance) {
     instance = createLogger({
       level: winstonConfig.level || defaultWinstonConfig.level,
@@ -36,6 +38,8 @@ function getInstance(winstonConfig = {}) {
   return instance
 }
 
-module.exports = {
-  getInstance
+module.exports = class Logger {
+  constructor() {
+    this.generateLogger = generateLogger
+  }
 }

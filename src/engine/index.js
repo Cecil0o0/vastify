@@ -1,14 +1,16 @@
-/**
- * @author Cecil
- * @description 引擎入口文件
+/*
+ * @Author: Cecil
+ * @Last Modified by: Cecil
+ * @Last Modified time: 2018-05-31 01:56:13
+ * @Description 引擎入口文件
  */
 'use strict'
 
 let config = require('../config')
 const Seneca = require('seneca')
+const HealthCheckWebModule = require('./health-check')
 const Web = require('./Web')
-const DeployTool = require('./DeployTool')
-const Logger = require('./Logger')
+const DB = require('./db-client')
 const { ObjectDeepSet } = require('../helper/utils')
 
 let instance = null
@@ -25,20 +27,16 @@ function getIntance(externalConfig = {}) {
     instance.web = new Web()
     // 提供http服务扩展
     instance.web.externalUseREST(instance.seneca)
-    // 日志组件
-    instance.logger = Logger.getInstance(instance.config.logger.winston)
     // 持久化存储组件
-    instance.db = require('./DB').getInstance(instance.config.db)
+    instance.db = DB.getInstance(instance.config.db)
+    // 初始化路由服务
+    RoutingServer()
+    // 初始化健康查询接口
+    instance.seneca.useREST(HealthCheckWebModule)
   }
   return instance
 }
 
-function getDeployTool() {
-  // pm2自动化部署相关工具
-  return new DeployTool()
-}
-
 module.exports = {
-  getIntance,
-  getDeployTool
+  getIntance
 }

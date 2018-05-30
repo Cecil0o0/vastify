@@ -26,8 +26,14 @@ function ObjectDeepSet(o1 = {}, o2 = {}) {
       }
     }
   }
+  return o1
 }
 
+const curry = type => param => typeof param === type
+
+const isString = curry('string')
+
 module.exports = {
-  ObjectDeepSet
+  ObjectDeepSet,
+  isString
 }

@@ -1,6 +1,8 @@
-/**
- * @author Cecil
- * @description 该模块输出自动化部署配置实例，用pm2
+/*
+ * @Author: Cecil
+ * @Last Modified by: Cecil
+ * @Last Modified time: 2018-05-31 01:55:51
+ * @Description 该模块输出自动化部署配置实例生成器，用pm2
  */
 
 'use strict'
