@@ -1,17 +1,17 @@
 /*
  * @Author: Cecil
  * @Last Modified by: Cecil
- * @Last Modified time: 2018-05-31 01:55:51
+ * @Last Modified time: 2018-05-31 10:02:35
  * @Description 该模块输出自动化部署配置实例生成器，用pm2
  */
 
 'use strict'
 
-const config = require('../config')
+const defaultConfig = require('../config').pm2
 
 function GeneratePM2AppConfig({ name = '', script = '', error_file = '', out_file = '', exec_mode = 'fork', instances = 1 }) {
   if (name) {
-    return Object.assign(config.pm2.app, {
+    return Object.assign(defaultConfig.app, {
       name,
       script: script || `${name}.js`,
       error_file: error_file || `${name}-err.log`,
@@ -27,7 +27,7 @@ function GeneratePM2AppConfig({ name = '', script = '', error_file = '', out_fil
 
 function GeneratePM2DeployConfig({ name = '', user = 'deploy', host = '', ref = 'remotes/origin/master', repo = '', path = '', env = {} } = {}) {
   if (user && host && repo && path) {
-    return Object.assign(config.pm2.deploy, {
+    return Object.assign(defaultConfig.deploy, {
       user,
       host,
       ref,

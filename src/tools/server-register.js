@@ -1,7 +1,7 @@
 /*
  * @Author: Cecil
  * @Last Modified by: Cecil
- * @Last Modified time: 2018-05-31 01:57:22
+ * @Last Modified time: 2018-05-31 09:27:54
  * @Description 微服务注册方法
  */
 const defaultConf = require('../config')['serverR&D']
@@ -48,14 +48,6 @@ function register({ consulServer = {}, bizService = {} } = {}) {
     })
   })
 }
-
-register({
-  bizService: {
-    name: 'wallet-server',
-    host: '127.0.0.1',
-    port: 3333
-  }
-})
 
 module.exports = class ServerRegister {
   constructor() {

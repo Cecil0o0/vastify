@@ -1,7 +1,7 @@
 /*
  * @Author: Cecil
  * @Last Modified by: Cecil
- * @Last Modified time: 2018-05-31 01:56:43
+ * @Last Modified time: 2018-05-31 09:58:00
  * @Description 该模块用于初始化web server实例 框架采用koa
  */
 
@@ -68,7 +68,7 @@ const externalUseREST = seneca => {
   seneca.useREST = useREST
 }
 
-module.exports = class Web {
+class Web {
   constructor () {
     // 须配合userREST后生效
     this.app = app
@@ -81,4 +81,17 @@ module.exports = class Web {
     // seneca-web适配koa
     this.SenecaWebAdapterKoa = SenecaWebAdapterKoa
   }
+}
+
+const instance = null
+
+function getInstance() {
+  if (!instance) {
+    instance = new Web()
+  }
+  return instance
+}
+
+module.exports = {
+  getInstance
 }
