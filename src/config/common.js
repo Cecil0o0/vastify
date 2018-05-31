@@ -1,7 +1,7 @@
 /*
  * @Author: Cecil
  * @Last Modified by: Cecil
- * @Last Modified time: 2018-05-31 01:58:34
+ * @Last Modified time: 2018-05-31 10:21:49
  * @Description 框架默认配置文件
  */
 
@@ -10,6 +10,13 @@
 const isProduction = process.env.NODE_ENV === 'production'
 
 module.exports = {
+
+  microservice: {
+    healthCheckReturn: {
+      version: 'default'
+    }
+  },
+
   seneca: {
     // seneca启动超时时间
     timeout: 5000,
@@ -113,6 +120,7 @@ module.exports = {
       }
     }
   },
+
   // 服务注册与发现
   // https://github.com/silas/node-consul#catalog-node-services
   'serverR&D': {

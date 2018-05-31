@@ -1,7 +1,7 @@
 /*
  * @Author: Cecil
  * @Last Modified by: Cecil
- * @Last Modified time: 2018-05-31 09:58:00
+ * @Last Modified time: 2018-05-31 10:42:24
  * @Description 该模块用于初始化web server实例 框架采用koa
  */
 
@@ -15,13 +15,14 @@ const logger = new (require('../tools/logger'))().generateLogger()
 const app = new Koa()
 
 class VastifyWebModule {
-  constructor ({ plugin, routes }) {
+  constructor ({ plugin, routes, options = {} }) {
     if (!plugin) throw new Error('plugin为必传参数，须符合http://senecajs.org/api/#plugin-init规范')
     if (!routes) throw new Error('routes为必传参数，须符合https://github.com/senecajs/seneca-web规范')
     // seneca插件
     this.plugin = plugin
     // seneca-web路由
     this.routes = routes
+    this.options = options
   }
 }
 
@@ -31,7 +32,7 @@ const isNormativeModule = m => {
 
 const use = function (m, { context }) {
   // 初始化模块
-  context.use(m.plugin)
+  context.use(m.plugin, m.options)
 
   // 初始化seneca-web插件，并适配koa
   context.use(SenecaWeb, {
@@ -83,7 +84,7 @@ class Web {
   }
 }
 
-const instance = null
+let instance = null
 
 function getInstance() {
   if (!instance) {

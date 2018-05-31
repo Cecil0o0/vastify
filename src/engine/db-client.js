@@ -1,7 +1,7 @@
 /*
  * @Author: Cecil
  * @Last Modified by: Cecil
- * @Last Modified time: 2018-05-31 09:57:36
+ * @Last Modified time: 2018-05-31 10:07:08
  * @Description mongodb实例
  */
 
@@ -36,5 +36,5 @@ function getInstance(DBConfig = {}) {
 }
 
 module.exports = {
-  getDBInstance
+  getInstance
 }

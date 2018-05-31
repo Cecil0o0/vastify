@@ -1,7 +1,7 @@
 /*
  * @Author: Cecil
  * @Last Modified by: Cecil
- * @Last Modified time: 2018-05-31 09:27:54
+ * @Last Modified time: 2018-05-31 11:11:06
  * @Description 微服务注册方法
  */
 const defaultConf = require('../config')['serverR&D']
@@ -20,14 +20,14 @@ function register({ consulServer = {}, bizService = {} } = {}) {
   service.id = service.name
   service.address = bizService.host
   service.port = bizService.port
-  service.check.http = `http://${service.address}:${service.port}/user`
+  service.check.http = `http://${service.address}:${service.port}/health`
 
   return new Promise((resolve, reject) => {
     consul.agent.service.list().then(res => {
       // 检查主机+端口是否已被占用
       Object.keys(res).some(key => {
         if (res[key].Address === service.address && res[key].Port === service.port) {
-          throw new Error('该服务集群endpoint已被占用！')
+          throw new Error(`该服务集群endpoint[${service.address}, ${service.port}]已被占用！`)
         }
       })
       // 注册集群服务

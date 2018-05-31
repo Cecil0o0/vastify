@@ -1,7 +1,7 @@
 /*
  * @Author: Cecil
  * @Last Modified by: Cecil
- * @Last Modified time: 2018-05-31 10:01:53
+ * @Last Modified time: 2018-05-31 10:44:06
  * @Description 引擎入口文件
  */
 'use strict'
@@ -28,7 +28,8 @@ function getInstance(externalConfig = {}) {
     // 提供http服务扩展
     instance.web.externalUseREST(instance.seneca)
     // 初始化健康查询接口
-    instance.seneca.useREST(HealthCheckWebModule)
+    HealthCheckWebModule.options = instance.config.microservice.healthCheckReturn
+    instance.seneca.useREST(new instance.web.VastifyWebModule(HealthCheckWebModule))
     // 持久化存储组件
     instance.db = DB.getInstance(instance.config.db)
   }

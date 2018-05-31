@@ -1,14 +1,15 @@
 /*
  * @Author: Cecil
  * @Last Modified by: Cecil
- * @Last Modified time: 2018-05-31 01:43:54
+ * @Last Modified time: 2018-05-31 11:12:42
  * @Description 微服务提供consul健康检查接口的插件
  */
 
 'use strict'
 
 const Web = require('./web')
-const { VastifyWebModule } = new Web()
+const web = Web.getInstance()
+const { VastifyWebModule } = web
 
 const moduleName = 'module:base'
 
@@ -25,13 +26,16 @@ const routes = [
   }
 ]
 
-function plugin (version = '') {
+function plugin (options = {}) {
   this.add(`${moduleName},if:check`, (msg, done) => {
-    done(null, version)
+    done(null, {
+      version: options.version
+    })
   })
 }
 
-module.exports = new VastifyWebModule({
+module.exports = {
   plugin,
-  routes
-})
+  routes,
+  options: {}
+}
