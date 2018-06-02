@@ -1,7 +1,7 @@
 /*
  * @Author: Cecil
  * @Last Modified by: Cecil
- * @Last Modified time: 2018-06-02 13:42:29
+ * @Last Modified time: 2018-06-02 15:41:46
  * @Description 微服务内部路由中间件，暂不支持自定义路由匹配策略
  */
 
@@ -10,13 +10,12 @@
 const Consul = require('consul')
 const defaultConf = require('../config')
 const { ObjectDeepSet, isNumber } = require('../helper/utils')
+const { getServiceNameByServiceKey, getServiceIdByServiceKey } = require('../helper/consul')
 const logger = new (require('../tools/logger'))().generateLogger()
 const { IPV4_REGEX } = require('../helper/regex')
-const { getServiceNameByServiceKey } = require('../helper/consul')
 
 let services = {}
 let consul = null
-let consulServerREGEX = /service:/
 
 /**
  * @author Cecil0o0
@@ -29,7 +28,7 @@ function syncCheckList () {
         services = allServices
         consul.agent.check.list().then(checks => {
           Object.keys(checks).forEach(key => {
-            allServices[key.replace(consulServerREGEX, '')]['check'] = checks[key]
+            allServices[getServiceIdByServiceKey(key)]['check'] = checks[key]
           })
           resolve(services)
         }).catch(err => {
@@ -81,7 +80,7 @@ function startTimeInterval() {
   setInterval(syncCheckList, defaultConf.routing.servicesRefresh)
 }
 
-function routing(consulServer) {
+function microRouting(consulServer) {
   var self = this
   consul = Consul(ObjectDeepSet(defaultConf['serverR&D'].consulServer, consulServer))
   syncCheckList().then(services => {
@@ -89,4 +88,4 @@ function routing(consulServer) {
   })
 }
 
-module.exports = routing
+module.exports = microRouting

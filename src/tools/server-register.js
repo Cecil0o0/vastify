@@ -1,7 +1,7 @@
 /*
  * @Author: Cecil
  * @Last Modified by: Cecil
- * @Last Modified time: 2018-06-02 13:54:36
+ * @Last Modified time: 2018-06-02 15:38:23
  * @Description 微服务注册方法
  */
 const defaultConf = require('../config')['serverR&D']
@@ -37,10 +37,10 @@ function register({ consulServer = {}, bizService = {} } = {}) {
       })
       // 注册集群服务
       consul.agent.service.register(service).then(() => {
-        logger.info(`${bizService.name}服务已注册`)
+        logger.info(`${bizService.name}服务已成功注册！`)
         resolve(services)
       }).catch(err => {
-        console.log(err)
+        throw new Error(err)
       })
     }).catch(err => {
       throw new Error(err)

@@ -1,8 +1,8 @@
 /*
  * @Author: Cecil
  * @Last Modified by: Cecil
- * @Last Modified time: 2018-06-02 09:59:37
- * @Description seneca关联consul的路由插件，作微服务网关
+ * @Last Modified time: 2018-06-02 15:41:59
+ * @Description 内置http路由服务
  */
 'use strict'
 
@@ -55,21 +55,6 @@ function start(consulServer) {
       const { $$target, $$version } = msg
     })
 
-    seneca.listen({
-      port: 33333,
-      pin: '$$target:routing-server'
-    })
-
-    seneca.client({
-      port: 10015,
-      pin: '$$target:account-server'
-    })
-
-    seneca.client({
-      port: 10016,
-      pin: '$$target:account-server'
-    })
-
     startTimeInterval()
   })
 }
@@ -80,6 +65,4 @@ function startTimeInterval() {
 
 start()
 
-module.exports = {
-  start
-}
+module.exports = start
