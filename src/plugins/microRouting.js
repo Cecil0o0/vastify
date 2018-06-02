@@ -1,7 +1,7 @@
 /*
  * @Author: Cecil
  * @Last Modified by: Cecil
- * @Last Modified time: 2018-06-02 15:41:46
+ * @Last Modified time: 2018-06-02 16:10:17
  * @Description 微服务内部路由中间件，暂不支持自定义路由匹配策略
  */
 
@@ -31,6 +31,7 @@ function syncCheckList () {
             allServices[getServiceIdByServiceKey(key)]['check'] = checks[key]
           })
           resolve(services)
+          console.log(services)
         }).catch(err => {
           throw new Error(err)
         })
@@ -44,6 +45,9 @@ function syncCheckList () {
     })
   })
 }
+
+consul = Consul(ObjectDeepSet(defaultConf['serverR&D'].consulServer))
+syncCheckList()
 
 function syncRoutingRule(senecaInstance = {}, services = {}) {
   Object.keys(services).forEach(key => {
@@ -61,14 +65,18 @@ function syncRoutingRule(senecaInstance = {}, services = {}) {
     }
 
     if (IPV4_REGEX.test($$addr) && isNumber($$microservicePort)) {
-      senecaInstance.client({
-        host: $$addr,
-        port: $$microservicePort,
-        pin: senecaInstance.util.pattern({
-          $$version,
-          $$target: name
+      if (service.check.Status === 'passing') {
+        senecaInstance.client({
+          host: $$addr,
+          port: $$microservicePort,
+          pin: {
+            $$version,
+            $$target: name
+          }
         })
-      })
+      } else {
+        logger.warn(`${$$target}@${$$version || '无'}服务处于critical，因此无法使用`)
+      }
     } else {
       logger.warn(`主机（${$$addr}）或微服务端口号（${$$microservicePort}）有误，请检查`)
     }

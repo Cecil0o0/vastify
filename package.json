@@ -1,6 +1,6 @@
 {
   "name": "vastify",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "description": "轻量级nodejs微服务框架",
   "main": "src/index.js",
   "scripts": {
