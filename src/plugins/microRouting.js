@@ -1,7 +1,7 @@
 /*
  * @Author: Cecil
  * @Last Modified by: Cecil
- * @Last Modified time: 2018-06-02 16:10:17
+ * @Last Modified time: 2018-06-02 16:15:27
  * @Description 微服务内部路由中间件，暂不支持自定义路由匹配策略
  */
 
@@ -45,9 +45,6 @@ function syncCheckList () {
     })
   })
 }
-
-consul = Consul(ObjectDeepSet(defaultConf['serverR&D'].consulServer))
-syncCheckList()
 
 function syncRoutingRule(senecaInstance = {}, services = {}) {
   Object.keys(services).forEach(key => {
