@@ -1,13 +1,14 @@
 /*
  * @Author: Cecil
  * @Last Modified by: Cecil
- * @Last Modified time: 2018-06-02 11:26:49
+ * @Last Modified time: 2018-06-02 13:54:36
  * @Description 微服务注册方法
  */
 const defaultConf = require('../config')['serverR&D']
 const { ObjectDeepSet, isString } = require('../helper/utils')
 const Consul = require('consul')
 const { generateServiceName, generateCheckHttp } = require('../helper/consul')
+const logger = new (require('./logger'))().generateLogger()
 
 // 注册服务
 

@@ -1,14 +1,14 @@
 /*
  * @Author: Cecil
  * @Last Modified by: Cecil
- * @Last Modified time: 2018-06-02 13:46:00
+ * @Last Modified time: 2018-06-02 13:52:12
  * @Description 入口文件
  */
 
 'use strict'
 
 const Engine = require('./engine')
-const Tools = require('../tools')
+const Tools = require('./tools')
 const Plugins = require('./plugins')
 
 module.exports = {
