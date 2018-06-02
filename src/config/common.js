@@ -1,7 +1,7 @@
 /*
  * @Author: Cecil
  * @Last Modified by: Cecil
- * @Last Modified time: 2018-05-31 10:21:49
+ * @Last Modified time: 2018-05-31 21:57:27
  * @Description 框架默认配置文件
  */
 
@@ -14,7 +14,12 @@ module.exports = {
   microservice: {
     healthCheckReturn: {
       version: 'default'
-    }
+    },
+    requestTimeout: '5s'
+  },
+
+  routing: {
+    servicesRefresh: 12000
   },
 
   seneca: {
@@ -34,7 +39,7 @@ module.exports = {
     },
     debug: {
       // 当设置为true时，如软件运行中throw new Error()软件不会挂掉
-      undead: !isProduction
+      undead: isProduction
     }
   },
 
@@ -150,7 +155,7 @@ module.exports = {
         // ttl: '15s',
         http: '',
         // check间隔时间(ex: 15s)
-        interval: '5s',
+        interval: '10s',
         // check超时时间(ex: 10s)
         timeout: '2s',
         // 处于临界状态后自动注销服务的超时时间
@@ -158,7 +163,7 @@ module.exports = {
         // 初始化状态值为成功
         status: 'passing',
         // 备注
-        notes: 'check集群是否alive'
+        notes: '{"version":"111","microservice-port":1115}'
       }
     }
   }
