@@ -1,7 +1,7 @@
 /*
  * @Author: Cecil
  * @Last Modified by: Cecil
- * @Last Modified time: 2018-06-02 10:57:52
+ * @Last Modified time: 2018-06-02 13:42:29
  * @Description 微服务内部路由中间件，暂不支持自定义路由匹配策略
  */
 
@@ -31,7 +31,6 @@ function syncCheckList () {
           Object.keys(checks).forEach(key => {
             allServices[key.replace(consulServerREGEX, '')]['check'] = checks[key]
           })
-          console.log(services)
           resolve(services)
         }).catch(err => {
           throw new Error(err)
@@ -39,7 +38,7 @@ function syncCheckList () {
       } else {
         const errmsg = '未发现可用服务'
         logger.warn(errmsg)
-        throw new Error(errmsg)
+        reject(errmsg)
       }
     }).catch(err => {
       throw new Error(err)
@@ -47,7 +46,7 @@ function syncCheckList () {
   })
 }
 
-function syncRoutingRule(senecaInstance) {
+function syncRoutingRule(senecaInstance = {}, services = {}) {
   Object.keys(services).forEach(key => {
     let service = services[key]
     let name = getServiceNameByServiceKey(key)
@@ -83,10 +82,11 @@ function startTimeInterval() {
 }
 
 function routing(consulServer) {
+  var self = this
   consul = Consul(ObjectDeepSet(defaultConf['serverR&D'].consulServer, consulServer))
-  syncCheckList()
+  syncCheckList().then(services => {
+    syncRoutingRule(self, services)
+  })
 }
-
-routing()
 
 module.exports = routing

@@ -1,15 +1,20 @@
+/*
+ * @Author: Cecil
+ * @Last Modified by: Cecil
+ * @Last Modified time: 2018-06-02 13:46:00
+ * @Description 入口文件
+ */
+
+'use strict'
+
 const Engine = require('./engine')
-const DeployTool = require('./tools/deploy-tool')
-const Logger = require('./tools/logger')
-const ServerRegister = require('./tools/server-register')
+const Tools = require('../tools')
+const Plugins = require('./plugins')
 
 module.exports = {
   ...Engine,
   // 以下对象单独实例化是因为考虑到业务代码中可能会**单独**使用
-  // pm2自动化部署相关工具
-  DeployTool: new DeployTool(),
-  // 日志组件
-  Logger: new Logger(),
-  // 服务注册（用于pm2编程作集群注册）
-  ServerRegister: new ServerRegister()
+  ...Tools,
+  // 框架内置插件
+  Plugins
 }
