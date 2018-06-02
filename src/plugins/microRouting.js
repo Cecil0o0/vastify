@@ -1,7 +1,7 @@
 /*
  * @Author: Cecil
  * @Last Modified by: Cecil
- * @Last Modified time: 2018-06-02 16:15:27
+ * @Last Modified time: 2018-06-02 16:22:02
  * @Description 微服务内部路由中间件，暂不支持自定义路由匹配策略
  */
 
@@ -31,7 +31,6 @@ function syncCheckList () {
             allServices[getServiceIdByServiceKey(key)]['check'] = checks[key]
           })
           resolve(services)
-          console.log(services)
         }).catch(err => {
           throw new Error(err)
         })
