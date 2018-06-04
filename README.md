@@ -14,10 +14,11 @@ a lightweight nodejs microservices framework
 - PM2：自动化部署
 - PM2集成docker
 - 请求追踪（重建用户请求流程）
-- Consul 服务注册与发现
+- 梳理Consul 服务注册与发现基本逻辑
+- 框架集成node-consul
 - mongodb持久化存储
+- 结合seneca与consul的路由服务中间件（可支持多个相同名字服务集群路由，通过$$version区别）
 - 支持流处理（文件上传/下载等）
-- 基于seneca的路由服务中间件
 - jenkins自动化部署
 - nginx负载均衡
 - 持续集成方案
