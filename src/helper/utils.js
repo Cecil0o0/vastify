@@ -5,7 +5,9 @@
  */
 'use strict'
 
-function ObjectDeepSet(o1 = {}, o2 = {}) {
+const { bailRE } = require('./regex')
+
+const ObjectDeepSet = function ObjectDeepSet(o1 = {}, o2 = {}) {
   for (let key in o1) {
     if (o1.hasOwnProperty(key) && o2.hasOwnProperty(key)) {
       if (o1[key] instanceof Array && o2[key] instanceof Array) {
@@ -34,8 +36,27 @@ const curry = type => param => typeof param === type
 const isString = curry('string')
 const isNumber = input => input === +input
 
+/**
+* Parse simple path.
+*/
+
+const parsePath = function parsePath (path) {
+ if (bailRE.test(path)) {
+   return
+ }
+ const segments = path.split('.')
+ return function (obj) {
+   for (let i = 0; i < segments.length; i++) {
+     if (!obj) return
+     obj = obj[segments[i]]
+   }
+   return obj
+ }
+}
+
 module.exports = {
   ObjectDeepSet,
   isString,
-  isNumber
+  isNumber,
+  parsePath
 }
