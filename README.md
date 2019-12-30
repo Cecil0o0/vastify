@@ -1,6 +1,6 @@
 # Vastify
 
-> `2 years ago` 甚是感慨啊！本仓库如果没有意外可能不再维护。不过如果对微服务或 Serverless 有更深的思考与感悟时会再更新 README。感谢读者们。
+> `2 years ago` 甚是感慨啊！本仓库如果没有意外将不再维护。不过如果对微服务或 Serverless 有更深的思考与感悟时会再更新 README。感谢读者们。
 
 a lightweight nodejs microservices framework
 
