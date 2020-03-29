@@ -13,18 +13,18 @@ a lightweight nodejs microservices framework
 - [x] RabbitMQ 消息队列
 - [x] PM2：node服务部署（服务集群）、管理与监控
 - [x] PM2：自动化部署（命令行一键部署）
-- PM2 集成 docker
-- K8S 做服务治理
+- [] PM2 集成 docker
+- [] K8S 做服务治理
 - [x] 请求追踪（重建用户请求流程）
 - [x] 梳理 Consul 服务注册与发现基本逻辑
 - [x] 框架集成 node-consul
 - [x] mongodb 持久化存储（集成第三方）
 - [x] 结合 seneca 与 consul 的路由服务中间件（可支持多个相同名字服务集群路由，通过 $$version 区别）
-- 支持流处理（文件上传/下载等）
-- jenkins 自动化部署
+- [] 支持流处理（文件上传/下载等）
+- [] jenkins 自动化部署
 - [x] nginx 做应用层负载均衡（集成第三方）
-- 持续集成方案
+- [] 持续集成方案
 - [x] redis 缓存（集成第三方）
-- Apollo 提供 GraphQL 接口
+- [] Apollo 提供 GraphQL 接口
 
 ~~[Introduction](https://blog.qingf.me/?p=734)~~
